@@ -1,0 +1,98 @@
+:root{
+  --bg:#0b0b10;
+  --card:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.12);
+  --text:rgba(255,255,255,.92);
+  --muted:rgba(255,255,255,.70);
+  --btn:rgba(255,255,255,.06);
+  --btnHover:rgba(255,255,255,.10);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 600px at 20% 0%, rgba(255, 180, 0, .18), transparent 60%),
+    radial-gradient(900px 600px at 85% 15%, rgba(60, 130, 255, .16), transparent 55%),
+    var(--bg);
+  display:grid;
+  place-items:center;
+  padding:28px 16px;
+}
+
+.card{
+  width:min(560px,100%);
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px 18px;
+  backdrop-filter: blur(10px);
+}
+
+.avatar{
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  margin:4px auto 12px;
+  border:1px solid var(--border);
+  background: rgba(0,0,0,.2);
+}
+
+.title{
+  text-align:center;
+  font-size:34px;
+  margin:0;
+  letter-spacing:.2px;
+}
+
+.subtitle{
+  text-align:center;
+  margin:6px 0 14px;
+  color:var(--muted);
+}
+
+.steps{
+  margin:0 auto 16px;
+  padding-left:20px;
+  color:var(--muted);
+  line-height:1.45;
+}
+
+.buttons{
+  display:grid;
+  gap:12px;
+  margin-top:10px;
+}
+
+.btn{
+  display:block;
+  text-decoration:none;
+  text-align:center;
+  padding:14px 14px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  color:var(--text);
+  background:var(--btn);
+  transition: transform 120ms ease, background 120ms ease;
+}
+
+.btn:hover{
+  transform: translateY(-1px);
+  background:var(--btnHover);
+}
+
+.btn.ghost{
+  background: transparent;
+}
+
+.footer{
+  margin-top:16px;
+  text-align:center;
+  color:var(--muted);
+  font-size:13px;
+}
