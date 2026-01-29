@@ -9,25 +9,90 @@
 </head>
 
 <body>
-  <main class="card">
-    <img class="avatar" src="./avatar.png" alt="SuperOA" />
+  <!-- декоративные “блобсы” -->
+  <div class="bg">
+    <span class="blob b1"></span>
+    <span class="blob b2"></span>
+    <span class="blob b3"></span>
+    <span class="grid"></span>
+    <span class="noise"></span>
+  </div>
 
-    <h1 class="title">SuperOA</h1>
-    <p class="subtitle">Официальные ссылки</p>
+  <main class="wrap">
+    <section class="card" id="card">
+      <div class="topline">
+        <span class="pill">Official</span>
+        <span class="pill ghost" id="status">online</span>
+      </div>
 
-    <ol class="steps">
-      <li>Нажми на <b>три точки</b> (справа вверху) и выбери <b>«Открыть в браузере»</b></li>
-      <li>После этого ты сможешь перейти в Telegram / YouTube</li>
-    </ol>
+      <div class="avatarWrap">
+        <img class="avatar" src="./avatar.png" alt="SuperOA" />
+        <span class="ring"></span>
+      </div>
 
-    <nav class="buttons">
-      <!-- Заменишь ссылки на свои -->
-      <a class="btn" href="https://t.me/+2SpIokbfEz1mNDg6" target="_blank" rel="noopener">Telegram канал</a>
-      <a class="btn" href="https://t.me/superoabot" target="_blank" rel="noopener">Telegram бот</a>
-      <a class="btn" href="https://www.youtube.com/@SuperOA_Official" target="_blank" rel="noopener">YouTube</a>
-    </nav>
+      <h1 class="title">SuperOA</h1>
+      <p class="subtitle">Официальные ссылки</p>
 
-    <footer class="footer">© 2025 SuperOA. Все права защищены.</footer>
+      <ol class="steps">
+        <li>Нажми на <b>три точки</b> (справа вверху) и выбери <b>«Открыть в браузере»</b></li>
+        <li>После этого ты сможешь перейти в Telegram / YouTube</li>
+      </ol>
+
+      <nav class="buttons">
+        <a class="btn" href="https://t.me/+2SpIokbfEz1mNDg6" target="_blank" rel="noopener">
+          <span class="btnIcon">✦</span>
+          <span>Telegram канал</span>
+          <span class="btnArrow">→</span>
+        </a>
+
+        <a class="btn" href="https://t.me/superoabot" target="_blank" rel="noopener">
+          <span class="btnIcon">✦</span>
+          <span>Telegram бот</span>
+          <span class="btnArrow">→</span>
+        </a>
+
+        <a class="btn" href="https://www.youtube.com/@SuperOA_Official" target="_blank" rel="noopener">
+          <span class="btnIcon">✦</span>
+          <span>YouTube</span>
+          <span class="btnArrow">→</span>
+        </a>
+      </nav>
+
+      <footer class="footer">
+        <span>© 2025 SuperOA. Все права защищены.</span>
+      </footer>
+    </section>
   </main>
+
+  <script>
+    // Нежный 3D tilt на карточке (выключается для reduced motion)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const card = document.getElementById('card');
+
+    if (!reduce && card) {
+      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+
+        const rx = clamp((0.5 - y) * 10, -8, 8);
+        const ry = clamp((x - 0.5) * 12, -10, 10);
+
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    }
+
+    // маленький “online” статус мигает аккуратно
+    const status = document.getElementById('status');
+    if (status && !reduce) {
+      setInterval(() => status.classList.toggle('pulse'), 1200);
+    }
+  </script>
 </body>
 </html>
