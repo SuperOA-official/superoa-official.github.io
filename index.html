@@ -5,82 +5,63 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SuperOA — Links</title>
   <meta name="description" content="Официальные ссылки SuperOA" />
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./style.css?v=3" />
 </head>
 
 <body>
-  <!-- декоративные “блобсы” -->
-  <div class="bg">
+  <div class="bg" aria-hidden="true">
     <span class="blob b1"></span>
     <span class="blob b2"></span>
-    <span class="blob b3"></span>
     <span class="grid"></span>
     <span class="noise"></span>
   </div>
 
-  <main class="wrap">
-    <section class="card" id="card">
-      <div class="topline">
-        <span class="pill">Official</span>
-        <span class="pill ghost" id="status">online</span>
-      </div>
+  <main class="card" id="card">
+    <div class="avatarWrap">
+      <img class="avatar" src="./avatar.png" alt="SuperOA" />
+      <span class="glow" aria-hidden="true"></span>
+    </div>
 
-      <div class="avatarWrap">
-        <img class="avatar" src="./avatar.png" alt="SuperOA" />
-        <span class="ring"></span>
-      </div>
+    <h1 class="title">SuperOA</h1>
+    <p class="subtitle">Официальные ссылки</p>
 
-      <h1 class="title">SuperOA</h1>
-      <p class="subtitle">Официальные ссылки</p>
+    <ol class="steps">
+      <li>Нажми на <b>три точки</b> (справа вверху) и выбери <b>«Открыть в браузере»</b></li>
+      <li>После этого ты сможешь перейти в Telegram / YouTube</li>
+    </ol>
 
-      <ol class="steps">
-        <li>Нажми на <b>три точки</b> (справа вверху) и выбери <b>«Открыть в браузере»</b></li>
-        <li>После этого ты сможешь перейти в Telegram / YouTube</li>
-      </ol>
+    <nav class="buttons" aria-label="Ссылки">
+      <a class="btn" href="https://t.me/+2SpIokbfEz1mNDg6" target="_blank" rel="noopener">
+        <span>Telegram канал</span>
+      </a>
+      <a class="btn" href="https://t.me/superoabot" target="_blank" rel="noopener">
+        <span>Telegram бот</span>
+      </a>
+      <a class="btn" href="https://www.youtube.com/@SuperOA_Official" target="_blank" rel="noopener">
+        <span>YouTube</span>
+      </a>
+    </nav>
 
-      <nav class="buttons">
-        <a class="btn" href="https://t.me/+2SpIokbfEz1mNDg6" target="_blank" rel="noopener">
-          <span class="btnIcon">✦</span>
-          <span>Telegram канал</span>
-          <span class="btnArrow">→</span>
-        </a>
-
-        <a class="btn" href="https://t.me/superoabot" target="_blank" rel="noopener">
-          <span class="btnIcon">✦</span>
-          <span>Telegram бот</span>
-          <span class="btnArrow">→</span>
-        </a>
-
-        <a class="btn" href="https://www.youtube.com/@SuperOA_Official" target="_blank" rel="noopener">
-          <span class="btnIcon">✦</span>
-          <span>YouTube</span>
-          <span class="btnArrow">→</span>
-        </a>
-      </nav>
-
-      <footer class="footer">
-        <span>© 2026 SuperOA. Все права защищены.</span>
-      </footer>
-    </section>
+    <footer class="footer">© 2026 SuperOA. Все права защищены.</footer>
   </main>
 
   <script>
-    // Нежный 3D tilt на карточке (выключается для reduced motion)
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Лёгкий tilt на карточке (очень аккуратный). Уважает "reduce motion".
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const card = document.getElementById('card');
 
     if (!reduce && card) {
-      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+      const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
 
       card.addEventListener('mousemove', (e) => {
         const r = card.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width;
         const y = (e.clientY - r.top) / r.height;
 
-        const rx = clamp((0.5 - y) * 10, -8, 8);
-        const ry = clamp((x - 0.5) * 12, -10, 10);
+        const rx = clamp((0.5 - y) * 6, -4, 4);
+        const ry = clamp((x - 0.5) * 8, -6, 6);
 
-        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-1px)`;
       });
 
       card.addEventListener('mouseleave', () => {
@@ -88,11 +69,25 @@
       });
     }
 
-    // маленький “online” статус мигает аккуратно
-    const status = document.getElementById('status');
-    if (status && !reduce) {
-      setInterval(() => status.classList.toggle('pulse'), 1200);
-    }
+    // Ripple на кнопках при клике
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) return;
+
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left;
+        const y = e.clientY - r.top;
+
+        const s = document.createElement('span');
+        s.className = 'ripple';
+        s.style.left = x + 'px';
+        s.style.top = y + 'px';
+        btn.appendChild(s);
+
+        s.addEventListener('animationend', () => s.remove());
+      }, { passive: true });
+    });
   </script>
 </body>
 </html>
